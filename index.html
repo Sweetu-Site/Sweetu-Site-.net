@@ -1,1 +1,751 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweetu | Creative Developer & Designer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#FF6B35',
+                        secondary: '#F7931E',
+                        dark: '#0a0a0a',
+                        darker: '#050505',
+                        light: '#fafafa',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'fade-in': 'fadeIn 1s ease-out forwards',
+                        'slide-up': 'slideUp 0.8s ease-out forwards',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(30px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FFD700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .dark .glass {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .hover-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .hover-card:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+        .project-card:hover .project-img {
+            transform: scale(1.1);
+        }
+        .skill-bar {
+            width: 0;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .skill-bar.active {
+            width: var(--width);
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #FF6B35;
+        }
+        .whatsapp-btn {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+        }
+        .whatsapp-btn:hover {
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+        }
+    </style>
+</head>
+<body class="font-sans bg-light text-dark dark:bg-darker dark:text-light transition-colors duration-300 overflow-x-hidden">
 
+    <div class="noise"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-40 px-6 py-4 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#" class="font-serif text-2xl font-bold tracking-tighter">
+                Sweetu<span class="text-primary">.</span>
+            </a>
+            
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#work" class="text-sm uppercase tracking-widest hover:text-primary transition-colors">Work</a>
+                <a href="#services" class="text-sm uppercase tracking-widest hover:text-primary transition-colors">Services</a>
+                <a href="#about" class="text-sm uppercase tracking-widest hover:text-primary transition-colors">About</a>
+                <a href="#contact" class="text-sm uppercase tracking-widest hover:text-primary transition-colors">Contact</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors" aria-label="Toggle theme">
+                    <svg id="sun-icon" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    <svg id="moon-icon" class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
+                
+                <button class="md:hidden p-2" onclick="toggleMenu()" aria-label="Menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-light dark:bg-darker border-t border-gray-200 dark:border-gray-800 py-4 px-6">
+            <a href="#work" class="block py-2 text-sm uppercase tracking-widest">Work</a>
+            <a href="#services" class="block py-2 text-sm uppercase tracking-widest">Services</a>
+            <a href="#about" class="block py-2 text-sm uppercase tracking-widest">About</a>
+            <a href="#contact" class="block py-2 text-sm uppercase tracking-widest">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-float"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-secondary/20 rounded-full blur-3xl animate-float" style="animation-delay: 2s;"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10 grid md:grid-cols-2 gap-12 items-center">
+            <div class="order-2 md:order-1">
+                <p class="text-primary font-medium mb-4 tracking-widest uppercase text-sm reveal">Available for Freelance</p>
+                <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-6 reveal stagger-1">
+                    Hi, I'm<br>
+                    <span class="text-gradient italic">Sweetu</span><br>
+                    Developer
+                </h1>
+                <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-lg reveal stagger-2">
+                    I craft digital experiences that blend aesthetic excellence with functional precision. Professional web developer & designer.
+                </p>
+                <div class="flex flex-wrap gap-4 reveal stagger-3">
+                    <a href="#work" class="px-8 py-4 bg-primary text-white rounded-full font-medium hover:bg-primary/90 transition-all hover:shadow-lg hover:shadow-primary/25">
+                        View My Work
+                    </a>
+                    <a href="https://wa.me/923016305418" target="_blank" class="whatsapp-btn px-8 py-4 text-white rounded-full font-medium transition-all flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                        WhatsApp Me
+                    </a>
+                </div>
+                
+                <div class="mt-12 flex items-center gap-8 reveal stagger-4">
+                    <div>
+                        <p class="font-serif text-3xl font-bold">5+</p>
+                        <p class="text-sm text-gray-500 uppercase tracking-wider">Years Exp.</p>
+                    </div>
+                    <div class="w-px h-12 bg-gray-300 dark:bg-gray-700"></div>
+                    <div>
+                        <p class="font-serif text-3xl font-bold">50+</p>
+                        <p class="text-sm text-gray-500 uppercase tracking-wider">Projects</p>
+                    </div>
+                    <div class="w-px h-12 bg-gray-300 dark:bg-gray-700"></div>
+                    <div>
+                        <p class="font-serif text-3xl font-bold">30+</p>
+                        <p class="text-sm text-gray-500 uppercase tracking-wider">Clients</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="order-1 md:order-2 relative">
+                <div class="relative w-full aspect-[3/4] max-w-sm mx-auto">
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary to-secondary rounded-3xl rotate-6 opacity-20"></div>
+                    <div class="absolute inset-0 bg-gray-200 dark:bg-gray-800 rounded-3xl overflow-hidden">
+                        <img src="IMG_20260409_152337.png" 
+                             alt="Sweetu" 
+                             class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                    </div>
+                    
+                    <div class="absolute -bottom-6 -left-6 glass p-4 rounded-2xl animate-float">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold">Available Now</p>
+                                <p class="text-xs text-gray-500">Open for projects</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="absolute -top-6 -right-6 glass p-4 rounded-2xl animate-float" style="animation-delay: 1s;">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold">
+                                5.0
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold">Top Rated</p>
+                                <p class="text-xs text-gray-500">Freelancer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+  </section>
+                      <!-- Selected Work Section -->
+    <section id="work" class="py-24 px-6 bg-gray-50 dark:bg-dark transition-colors">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 reveal">
+                <div>
+                    <p class="text-primary font-medium mb-2 tracking-widest uppercase text-sm">Portfolio</p>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold">Selected Work</h2>
+                </div>
+                <a href="#contact" class="mt-4 md:mt-0 text-sm uppercase tracking-widest border-b border-primary pb-1 hover:text-primary transition-colors">
+                    Start Project
+                </a>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="project-card group relative overflow-hidden rounded-2xl cursor-pointer reveal stagger-1">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=80" 
+                             alt="E-commerce Platform" 
+                             class="project-img w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-8">
+                        <p class="text-primary text-sm uppercase tracking-wider mb-2">Web Development</p>
+                        <h3 class="font-serif text-2xl text-white font-bold mb-2">E-commerce Platform</h3>
+                        <p class="text-gray-300 text-sm">Full-stack development with modern tech</p>
+                    </div>
+                </div>
+
+                <div class="project-card group relative overflow-hidden rounded-2xl cursor-pointer reveal stagger-2">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&auto=format&fit=crop&q=80" 
+                             alt="Brand Identity" 
+                             class="project-img w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-8">
+                        <p class="text-primary text-sm uppercase tracking-wider mb-2">Brand Identity</p>
+                        <h3 class="font-serif text-2xl text-white font-bold mb-2">Complete Branding</h3>
+                        <p class="text-gray-300 text-sm">Visual identity system design</p>
+                    </div>
+                </div>
+
+                <div class="project-card group relative overflow-hidden rounded-2xl cursor-pointer reveal stagger-3">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80" 
+                             alt="Dashboard Design" 
+                             class="project-img w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-8">
+                        <p class="text-primary text-sm uppercase tracking-wider mb-2">UI/UX Design</p>
+                        <h3 class="font-serif text-2xl text-white font-bold mb-2">Analytics Dashboard</h3>
+                        <p class="text-gray-300 text-sm">Data visualization interface</p>
+                    </div>
+                </div>
+
+                <div class="project-card group relative overflow-hidden rounded-2xl cursor-pointer reveal stagger-4">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80" 
+                             alt="Mobile App" 
+                             class="project-img w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-8">
+                        <p class="text-primary text-sm uppercase tracking-wider mb-2">Mobile App</p>
+                        <h3 class="font-serif text-2xl text-white font-bold mb-2">Fitness Tracker App</h3>
+                        <p class="text-gray-300 text-sm">Cross-platform development</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <p class="text-primary font-medium mb-2 tracking-widest uppercase text-sm">What I Do</p>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold mb-4">Services</h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">I provide comprehensive digital solutions tailored to your unique business needs.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="hover-card glass p-8 rounded-3xl reveal stagger-1 group">
+                    <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors text-primary">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold mb-3">Web Development</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">Custom websites and web applications built with modern technologies.</p>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                            React & Next.js
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                            Node.js & Python
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                            E-commerce Solutions
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="hover-card glass p-8 rounded-3xl reveal stagger-2 group">
+                    <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors text-primary">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold mb-3">UI/UX Design</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">User-centered design combining aesthetics with functionality.</p>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                            Interface Design
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                            User Research
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                            Prototyping
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="hover-card glass p-8 rounded-3xl reveal stagger-3 group">
+                    <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors text-primary">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold mb-3">Brand Strategy</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">Comprehensive branding solutions that tell your story.</p>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                            Logo Design
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                            Visual Identity
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                            Brand Guidelines
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+                      </section>
+      <!-- About Section -->
+    <section id="about" class="py-24 px-6 bg-gray-50 dark:bg-dark transition-colors">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <p class="text-primary font-medium mb-2 tracking-widest uppercase text-sm">About Me</p>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold mb-6">Crafting Digital Excellence</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
+                        With over 5 years of experience in the digital industry, I specialize in creating bespoke web solutions that drive results. My approach combines technical expertise with creative vision.
+                    </p>
+                    <p class="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+                        I've worked with startups, agencies, and established brands across various industries, helping them establish a strong digital presence.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">Frontend Development</span>
+                                <span class="text-primary">95%</span>
+                            </div>
+                            <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                <div class="skill-bar h-full bg-gradient-to-r from-primary to-secondary rounded-full" style="--width: 95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">UI/UX Design</span>
+                                <span class="text-primary">90%</span>
+                            </div>
+                            <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                <div class="skill-bar h-full bg-gradient-to-r from-primary to-secondary rounded-full" style="--width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">Backend Development</span>
+                                <span class="text-primary">85%</span>
+                            </div>
+                            <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                <div class="skill-bar h-full bg-gradient-to-r from-primary to-secondary rounded-full" style="--width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative reveal stagger-2">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-4 mt-8">
+                            <div class="glass p-6 rounded-2xl text-center hover-card">
+                                <p class="font-serif text-3xl font-bold text-primary mb-1">50+</p>
+                                <p class="text-sm text-gray-500">Projects Completed</p>
+                            </div>
+                            <div class="glass p-6 rounded-2xl text-center hover-card">
+                                <p class="font-serif text-3xl font-bold text-primary mb-1">30+</p>
+                                <p class="text-sm text-gray-500">Happy Clients</p>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="glass p-6 rounded-2xl text-center hover-card">
+                                <p class="font-serif text-3xl font-bold text-primary mb-1">5+</p>
+                                <p class="text-sm text-gray-500">Years Experience</p>
+                            </div>
+                            <div class="glass p-6 rounded-2xl text-center hover-card">
+                                <p class="font-serif text-3xl font-bold text-primary mb-1">12</p>
+                                <p class="text-sm text-gray-500">Awards Won</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 glass p-6 rounded-2xl">
+                        <p class="text-sm uppercase tracking-wider text-gray-500 mb-4">Tech Stack</p>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-4 py-2 bg-white dark:bg-gray-800 rounded-full text-sm font-medium shadow-sm">React</span>
+                            <span class="px-4 py-2 bg-white dark:bg-gray-800 rounded-full text-sm font-medium shadow-sm">Next.js</span>
+                            <span class="px-4 py-2 bg-white dark:bg-gray-800 rounded-full text-sm font-medium shadow-sm">TypeScript</span>
+                            <span class="px-4 py-2 bg-white dark:bg-gray-800 rounded-full text-sm font-medium shadow-sm">Node.js</span>
+                            <span class="px-4 py-2 bg-white dark:bg-gray-800 rounded-full text-sm font-medium shadow-sm">Python</span>
+                            <span class="px-4 py-2 bg-white dark:bg-gray-800 rounded-full text-sm font-medium shadow-sm">Figma</span>
+                            <span class="px-4 py-2 bg-white dark:bg-gray-800 rounded-full text-sm font-medium shadow-sm">Tailwind</span>
+                            <span class="px-4 py-2 bg-white dark:bg-gray-800 rounded-full text-sm font-medium shadow-sm">PostgreSQL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-24 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <p class="text-primary font-medium mb-2 tracking-widest uppercase text-sm">Testimonials</p>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold">Client Feedback</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass p-8 rounded-3xl reveal stagger-1">
+                    <div class="flex gap-1 mb-4">
+                        <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6 italic">"Sweetu transformed our outdated website into a modern, high-converting platform. His attention to detail is unmatched."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center text-primary font-bold">SJ</div>
+                        <div>
+                            <p class="font-bold">Sarah Johnson</p>
+                            <p class="text-sm text-gray-500">CEO, TechStart</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass p-8 rounded-3xl reveal stagger-2">
+                    <div class="flex gap-1 mb-4">
+                        <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6 italic">"Delivered a beautiful MVP in record time that helped us secure our first round of funding. Highly recommended!"</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center text-secondary font-bold">MC</div>
+                        <div>
+                            <p class="font-bold">Michael Chen</p>
+                            <p class="text-sm text-gray-500">Founder, AppWorks</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass p-8 rounded-3xl reveal stagger-3">
+                    <div class="flex gap-1 mb-4">
+                        <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6 italic">"Created a brand identity that perfectly captures our company's essence. Professional and creative work!"</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-yellow-500/20 rounded-full flex items-center justify-center text-yellow-600 font-bold">ED</div>
+                        <div>
+                            <p class="font-bold">Emily Davis</p>
+                            <p class="text-sm text-gray-500">Marketing Director</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                              </section>
+      <!-- Contact Section -->
+    <section id="contact" class="py-24 px-6 bg-gray-50 dark:bg-dark transition-colors relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"></div>
+        
+        <div class="max-w-4xl mx-auto relative z-10">
+            <div class="text-center mb-16 reveal">
+                <p class="text-primary font-medium mb-2 tracking-widest uppercase text-sm">Get In Touch</p>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold mb-4">Let's Work Together</h2>
+                <p class="text-gray-600 dark:text-gray-400">Have a project in mind? I'd love to hear about it.</p>
+            </div>
+
+            <form class="glass p-8 md:p-12 rounded-3xl reveal stagger-1" onsubmit="handleSubmit(event)">
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 uppercase tracking-wider">Name</label>
+                        <input type="text" required class="w-full px-4 py-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 transition-colors" placeholder="Your Name">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 uppercase tracking-wider">Email</label>
+                        <input type="email" required class="w-full px-4 py-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 transition-colors" placeholder="your@email.com">
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2 uppercase tracking-wider">Subject</label>
+                    <select class="w-full px-4 py-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 transition-colors">
+                        <option>Project Inquiry</option>
+                        <option>Freelance Opportunity</option>
+                        <option>Collaboration</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2 uppercase tracking-wider">Message</label>
+                    <textarea rows="5" required class="w-full px-4 py-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 transition-colors resize-none" placeholder="Tell me about your project..."></textarea>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button type="submit" class="flex-1 py-4 bg-primary text-white rounded-xl font-medium hover:bg-primary/90 transition-all hover:shadow-lg hover:shadow-primary/25">
+                        Send Message
+                    </button>
+                    <a href="https://wa.me/923016305418" target="_blank" class="whatsapp-btn flex-1 py-4 text-white rounded-xl font-medium transition-all flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                        Chat on WhatsApp
+                    </a>
+                </div>
+            </form>
+
+            <div class="mt-12 flex flex-wrap justify-center gap-8 reveal stagger-2">
+                <a href="mailto:sheikhsahibbrand@gmail.com" class="flex items-center gap-3 text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                    sheikhsahibbrand@gmail.com
+                </a>
+                <a href="https://wa.me/923016305418" target="_blank" class="flex items-center gap-3 text-gray-600 dark:text-gray-400 hover:text-green-500 transition-colors">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                    +92 301 6305418
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 px-6 border-t border-gray-200 dark:border-gray-800">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-sm text-gray-500">© 2024 Sweetu. All rights reserved.</p>
+            <div class="flex gap-6 text-sm text-gray-500">
+                <a href="mailto:sheikhsahibbrand@gmail.com" class="hover:text-primary transition-colors">Email</a>
+                <a href="https://wa.me/923016305418" target="_blank" class="hover:text-green-500 transition-colors">WhatsApp</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        }
+
+        // Initialize theme
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Scroll Reveal Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    
+                    if (entry.target.querySelector('.skill-bar')) {
+                        entry.target.querySelectorAll('.skill-bar').forEach(bar => {
+                            bar.classList.add('active');
+                        });
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Navbar Scroll Effect
+        let lastScroll = 0;
+        const navbar = document.getElementById('navbar');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                navbar.classList.add('glass', 'backdrop-blur-md');
+            } else {
+                navbar.classList.remove('glass', 'backdrop-blur-md');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Form Submit Handler - Email to sheikhsahibbrand@gmail.com
+        function handleSubmit(e) {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+            const name = form.querySelector('input[type="text"]').value;
+            const email = form.querySelector('input[type="email"]').value;
+            const subject = form.querySelector('select').value;
+            const message = form.querySelector('textarea').value;
+            
+            // Create mailto link with form data
+            const mailtoLink = `mailto:sheikhsahibbrand@gmail.com?subject=${encodeURIComponent(subject + ' - From ' + name)}&body=${encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\nMessage:\n' + message)}`;
+            
+            window.location.href = mailtoLink;
+            
+            const btn = form.querySelector('button[type="submit"]');
+            const originalText = btn.innerText;
+            
+            btn.innerText = 'Opening Email...';
+            btn.classList.add('bg-green-500');
+            btn.classList.remove('bg-primary');
+            
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.classList.remove('bg-green-500');
+                btn.classList.add('bg-primary');
+                form.reset();
+            }, 3000);
+        }
+
+        // Smooth Scroll for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                }
+            });
+        });
+
+        // WhatsApp Button Click Tracking
+        document.querySelectorAll('a[href*="wa.me"]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                console.log('WhatsApp button clicked');
+            });
+        });
+    </script>
+</body>
+                                                                                                                                                                                                         </html>
+  
