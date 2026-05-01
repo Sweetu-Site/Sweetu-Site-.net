@@ -1,1 +1,1611 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sweetu | Professional Freelancer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Raleway:wght@300;400;600;800;900&display=swap" rel="stylesheet"/>
+<style>
+/* ==============================
+   CSS VARIABLES & RESET
+============================== */
+:root {
+  --gold: #FFD700;
+  --gold2: #B8860B;
+  --gold3: #DAA520;
+  --gold-light: #FFF4A0;
+  --white: #FFFFFF;
+  --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+[data-theme="dark"] {
+  --bg: #080808;
+  --bg2: #0f0f0f;
+  --bg3: #141414;
+  --text: #F5F0E8;
+  --text2: #9A9080;
+  --card: rgba(20,18,12,0.9);
+  --card-border: rgba(255,215,0,0.15);
+  --nav-bg: rgba(8,8,8,0.92);
+  --input-bg: #0f0f0f;
+}
+[data-theme="light"] {
+  --bg: #FAF7F0;
+  --bg2: #FFFFFF;
+  --bg3: #F5F0E8;
+  --text: #1A1008;
+  --text2: #6B5F40;
+  --card: rgba(255,253,245,0.95);
+  --card-border: rgba(184,134,11,0.25);
+  --nav-bg: rgba(250,247,240,0.94);
+  --input-bg: #FAF7F0;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Raleway',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+  transition:background 0.4s,color 0.4s;
+}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--gold2);border-radius:2px;}
 
+/* ==============================
+   NAVIGATION
+============================== */
+nav{
+  position:fixed;top:0;width:100%;z-index:1000;
+  background:var(--nav-bg);
+  backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--card-border);
+  height:72px;display:flex;align-items:center;
+  padding:0 5%;justify-content:space-between;
+  transition:var(--transition);
+}
+.logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2rem;font-weight:700;
+  background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--gold2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  letter-spacing:6px;text-decoration:none;
+}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{
+  color:var(--text2);text-decoration:none;
+  font-size:0.8rem;letter-spacing:3px;text-transform:uppercase;
+  font-weight:600;position:relative;padding:4px 0;
+  transition:color 0.3s;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:0;left:0;
+  width:0;height:1px;background:var(--gold);
+  transition:width 0.4s ease;
+}
+.nav-links a:hover{color:var(--gold);}
+.nav-links a:hover::after{width:100%;}
+.nav-right{display:flex;align-items:center;gap:1rem;}
+.theme-btn{
+  background:none;
+  border:1px solid var(--card-border);
+  color:var(--gold);
+  width:40px;height:40px;
+  border-radius:50%;cursor:pointer;
+  font-size:1rem;
+  transition:var(--transition);
+  display:flex;align-items:center;justify-content:center;
+}
+.theme-btn:hover{background:var(--gold);color:#000;border-color:var(--gold);}
+.hamburger{display:none;flex-direction:column;cursor:pointer;gap:5px;padding:5px;}
+.hamburger span{width:22px;height:1.5px;background:var(--gold);transition:var(--transition);display:block;}
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+}
+  .nav-links.mobile-open{
+  display:flex;flex-direction:column;
+  position:fixed;top:72px;left:0;right:0;
+  background:var(--nav-bg);backdrop-filter:blur(24px);
+  padding:2rem 5%;border-bottom:1px solid var(--card-border);
+  gap:1.5rem;z-index:999;
+}
+
+/* ==============================
+   HERO SECTION
+============================== */
+#home{
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:72px 5% 0;position:relative;overflow:hidden;
+}
+#three-canvas{position:absolute;inset:0;pointer-events:none;z-index:0;}
+.hero-left{position:relative;z-index:2;max-width:580px;}
+.hero-eyebrow{
+  font-size:0.7rem;letter-spacing:6px;text-transform:uppercase;
+  color:var(--gold3);margin-bottom:1.5rem;
+  display:flex;align-items:center;gap:12px;
+}
+.hero-eyebrow::before{
+  content:'';width:40px;height:1px;background:var(--gold);
+}
+.hero-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(4rem,9vw,8rem);
+  font-weight:700;line-height:0.9;
+  background:linear-gradient(160deg,var(--white) 20%,var(--gold-light) 50%,var(--gold) 80%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:1.2rem;
+  animation:fadeSlideUp 1s ease both;
+}
+.hero-subtitle{
+  font-size:1rem;color:var(--text2);
+  letter-spacing:1px;margin-bottom:1rem;
+  font-weight:400;
+}
+.typing-wrap{
+  font-size:1.3rem;font-weight:800;
+  color:var(--gold);letter-spacing:2px;
+  margin-bottom:2rem;min-height:2rem;
+}
+.cursor{
+  border-right:2px solid var(--gold);
+  animation:blink 0.75s infinite;
+  margin-left:2px;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.hero-desc{
+  color:var(--text2);line-height:1.9;
+  font-size:0.95rem;max-width:460px;
+  margin-bottom:2.5rem;font-weight:400;
+}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3rem;}
+.btn-primary{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#000;padding:14px 34px;border-radius:2px;
+  text-decoration:none;font-weight:800;font-size:0.8rem;
+  letter-spacing:3px;text-transform:uppercase;
+  transition:var(--transition);border:none;cursor:pointer;
+  box-shadow:0 8px 30px rgba(255,215,0,0.3);
+  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+}
+.btn-primary:hover{
+  transform:translateY(-3px);
+  box-shadow:0 15px 50px rgba(255,215,0,0.5);
+}
+.btn-secondary{
+  background:transparent;
+  color:var(--gold);
+  padding:13px 32px;border:1px solid var(--gold);
+  border-radius:2px;text-decoration:none;
+  font-weight:600;font-size:0.8rem;
+  letter-spacing:3px;text-transform:uppercase;
+  transition:var(--transition);cursor:pointer;
+  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+}
+.btn-secondary:hover{background:var(--gold);color:#000;transform:translateY(-3px);}
+.hero-stats{
+  display:flex;gap:3rem;
+  padding-top:2rem;
+  border-top:1px solid var(--card-border);
+}
+.stat{text-align:left;}
+.stat-n{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.8rem;font-weight:700;
+  background:linear-gradient(135deg,var(--gold),var(--gold3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  line-height:1;
+}
+.stat-l{
+  font-size:0.65rem;letter-spacing:3px;
+  text-transform:uppercase;color:var(--text2);
+  margin-top:4px;
+}
+.hero-right{
+  position:relative;z-index:2;
+  animation:floatPhoto 6s ease-in-out infinite;
+}
+@keyframes floatPhoto{
+  0%,100%{transform:translateY(0) rotate(0deg);}
+  33%{transform:translateY(-18px) rotate(1deg);}
+  66%{transform:translateY(-8px) rotate(-1deg);}
+}
+.photo-wrapper{
+  position:relative;width:360px;height:460px;
+}
+.photo-ring-1{
+  position:absolute;inset:-20px;
+  border:1px solid rgba(255,215,0,0.3);
+  border-radius:62% 38% 46% 54% / 60% 44% 56% 40%;
+  animation:ringMorph 8s ease-in-out infinite;
+}
+.photo-ring-2{
+  position:absolute;inset:-40px;
+  border:1px solid rgba(255,215,0,0.12);
+  border-radius:38% 62% 54% 46% / 44% 60% 40% 56%;
+  animation:ringMorph2 10s ease-in-out infinite;
+}
+@keyframes ringMorph{
+  0%,100%{border-radius:62% 38% 46% 54% / 60% 44% 56% 40%;}
+  50%{border-radius:44% 56% 60% 40% / 48% 62% 38% 52%;}
+}
+@keyframes ringMorph2{
+  0%,100%{border-radius:38% 62% 54% 46% / 44% 60% 40% 56%;}
+  50%{border-radius:60% 40% 42% 58% / 62% 38% 62% 38%;}
+}
+.photo-glow{
+  position:absolute;inset:-30px;
+  background:radial-gradient(ellipse at center,rgba(255,215,0,0.18) 0%,transparent 70%);
+  border-radius:inherit;
+  animation:glowPulse 3s ease-in-out infinite alternate;
+  }
+  @keyframes glowPulse{
+  from{opacity:0.4;transform:scale(0.95);}
+  to{opacity:1;transform:scale(1.05);}
+}
+.photo-border{
+  position:absolute;inset:-3px;
+  background:conic-gradient(from 0deg,var(--gold),transparent 30%,var(--gold3) 60%,transparent 80%,var(--gold));
+  border-radius:58% 42% 52% 48% / 54% 46% 54% 46%;
+  animation:spinBorder 6s linear infinite;
+}
+@keyframes spinBorder{
+  from{transform:rotate(0deg);}to{transform:rotate(360deg);}
+}
+.photo-border-inner{
+  position:absolute;inset:2px;
+  background:var(--bg);
+  border-radius:inherit;
+}
+.photo-img{
+  position:absolute;inset:3px;
+  border-radius:56% 44% 50% 50% / 52% 48% 52% 48%;
+  overflow:hidden;
+  background:linear-gradient(160deg,#1a1008,#2a1a04);
+}
+.photo-img img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:top;
+  display:block;
+}
+.photo-fallback{
+  width:100%;height:100%;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  background:linear-gradient(160deg,#1a1008,#2a1a04);
+}
+.photo-fallback span{font-size:5rem;opacity:0.6;}
+.photo-fallback p{
+  color:var(--gold);font-size:1.5rem;
+  font-family:'Cormorant Garamond',serif;
+  font-weight:700;letter-spacing:4px;
+  margin-top:0.5rem;
+}
+.scroll-down{
+  position:absolute;bottom:30px;left:50%;
+  transform:translateX(-50%);
+  z-index:2;display:flex;flex-direction:column;
+  align-items:center;gap:8px;color:var(--text2);
+  font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;
+  animation:bounceDown 2s infinite;cursor:pointer;
+}
+.scroll-down::after{
+  content:'';width:1px;height:40px;
+  background:linear-gradient(to bottom,var(--gold),transparent);
+  animation:scrollLine 2s infinite;
+}
+@keyframes bounceDown{
+  0%,100%{transform:translateX(-50%) translateY(0);}
+  50%{transform:translateX(-50%) translateY(8px);}
+}
+@keyframes scrollLine{
+  0%{opacity:0;transform:scaleY(0);transform-origin:top;}
+  50%{opacity:1;transform:scaleY(1);}
+  100%{opacity:0;transform:scaleY(0);transform-origin:bottom;}
+}
+@media(max-width:768px){
+  #home{flex-direction:column;padding-top:100px;text-align:center;gap:3rem;}
+  .hero-right{order:-1;}
+  .photo-wrapper{width:240px;height:300px;}
+  .hero-eyebrow{justify-content:center;}
+  .hero-btns{justify-content:center;}
+  .hero-stats{gap:1.5rem;justify-content:center;}
+  .hero-desc{margin:0 auto 2rem;}
+}
+
+/* ==============================
+   SECTION COMMONS
+============================== */
+.section{min-height:100vh;padding:120px 5% 80px;}
+.section-alt{background:var(--bg2);}
+.s-label{
+  font-size:0.65rem;letter-spacing:6px;
+  text-transform:uppercase;color:var(--gold3);
+  margin-bottom:1rem;
+  display:flex;align-items:center;gap:12px;
+}
+.s-label::before{content:'';width:30px;height:1px;background:var(--gold3);}
+.s-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.5rem,5vw,4.5rem);
+  font-weight:700;line-height:1;
+  background:linear-gradient(135deg,var(--text),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:1.5rem;
+}
+.s-line{
+  width:60px;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold3));
+  margin-bottom:2rem;
+}
+.reveal{
+  opacity:0;transform:translateY(40px);
+  transition:opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* ==============================
+   ABOUT SECTION
+============================== */
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5rem;align-items:center;
+  margin-top:4rem;
+}
+@media(max-width:900px){.about-grid{grid-template-columns:1fr;gap:3rem;}}
+.about-text p{
+  color:var(--text2);line-height:1.9;
+  font-size:0.95rem;margin-bottom:1.5rem;
+}
+.about-detail{
+  display:flex;gap:1.5rem;margin-top:2rem;flex-wrap:wrap;
+}
+.detail-item{
+  flex:1;min-width:140px;
+  padding:1.2rem;
+  background:var(--card);
+  border:1px solid var(--card-border);
+  border-radius:4px;text-align:center;
+  transition:var(--transition);
+}
+.detail-item:hover{
+  border-color:var(--gold);
+  transform:translateY(-5px);
+  box-shadow:0 15px 40px rgba(255,215,0,0.1);
+}
+.detail-icon{font-size:1.8rem;margin-bottom:0.5rem;}
+.detail-val{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2rem;font-weight:700;
+  color:var(--gold);
+}
+.detail-key{
+  font-size:0.7rem;letter-spacing:2px;
+  text-transform:uppercase;color:var(--text2);
+}
+.skill-group{display:flex;flex-direction:column;gap:1.2rem;}
+.skill-item{}
+.skill-head{
+  display:flex;justify-content:space-between;
+  margin-bottom:0.6rem;
+}
+.skill-nm{font-size:0.85rem;font-weight:700;letter-spacing:1px;}
+.skill-pc{font-size:0.85rem;color:var(--gold);font-weight:700;}
+.skill-bar{
+  height:3px;
+  background:rgba(255,215,0,0.1);
+  border-radius:2px;overflow:hidden;
+}
+.skill-fill{
+  height:100%;width:0;
+  background:linear-gradient(90deg,var(--gold2),var(--gold));
+  border-radius:2px;
+  transition:width 1.8s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.services-row{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:1.5rem;margin-top:5rem;
+}
+.svc-card{
+  background:var(--card);
+  border:1px solid var(--card-border);
+  border-radius:4px;padding:2rem 1.5rem;
+  text-align:center;
+  transition:var(--transition);
+  cursor:default;
+  transform-style:preserve-3d;
+}
+.svc-card:hover{
+  transform:translateY(-12px) perspective(800px) rotateX(5deg);
+  border-color:var(--gold);
+  box-shadow:0 25px 60px rgba(255,215,0,0.15),0 0 0 1px rgba(255,215,0,0.3);
+}
+.svc-icon{
+  font-size:2.5rem;margin-bottom:1rem;
+  display:block;
+  filter:drop-shadow(0 0 8px rgba(255,215,0,0.4));
+}
+.svc-card h4{
+  color:var(--gold);margin-bottom:0.6rem;
+  font-size:0.95rem;letter-spacing:2px;
+  text-transform:uppercase;
+}
+.svc-card p{color:var(--text2);font-size:0.85rem;line-height:1.7;}
+
+/* ==============================
+   PORTFOLIO SECTION
+============================== */
+.port-filter{
+  display:flex;gap:1rem;margin-bottom:3rem;flex-wrap:wrap;
+}
+.filter-btn{
+  background:none;border:1px solid var(--card-border);
+  color:var(--text2);padding:8px 20px;border-radius:2px;
+  font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;
+  cursor:pointer;transition:var(--transition);font-family:'Raleway',sans-serif;
+}
+.filter-btn.active,.filter-btn:hover{
+  background:var(--gold);color:#000;border-color:var(--gold);font-weight:700;
+}
+.port-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:2rem;
+}
+.port-card{
+  background:var(--card);
+  border:1px solid var(--card-border);
+  border-radius:4px;overflow:hidden;
+  transition:var(--transition);
+  transform-style:preserve-3d;
+  cursor:pointer;
+  position:relative;
+}
+.port-card:hover{
+  transform:translateY(-16px) perspective(1000px) rotateX(4deg) rotateY(-2deg);
+  border-color:var(--gold);
+  box-shadow:0 30px 70px rgba(255,215,0,0.2),0 0 0 1px rgba(255,215,0,0.4),20px 20px 40px rgba(0,0,0,0.4);
+}
+.port-thumb{
+  height:220px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:4rem;
+  position:relative;overflow:hidden;
+}
+.port-thumb::before{
+  content:'';
+  position:absolute;inset:0;
+  background:inherit;
+  filter:blur(20px);
+  opacity:0.3;
+  transform:scale(1.1);
+}
+.port-thumb .icon{position:relative;z-index:1;}
+.port-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,0.85));
+  opacity:0;transition:opacity 0.4s;
+  display:flex;align-items:flex-end;padding:1rem;
+}
+.port-card:hover .port-overlay{opacity:1;}
+.port-body{padding:1.5rem;}
+.port-body h4{
+  color:var(--gold);margin-bottom:0.5rem;
+  font-size:1rem;letter-spacing:1px;
+  }
+  .port-body p{color:var(--text2);font-size:0.85rem;line-height:1.6;}
+.port-tags{display:flex;gap:0.5rem;margin-top:1rem;flex-wrap:wrap;}
+.p-tag{
+  background:rgba(255,215,0,0.08);
+  color:var(--gold3);
+  padding:3px 10px;border-radius:1px;
+  font-size:0.72rem;letter-spacing:1px;
+  border:1px solid rgba(255,215,0,0.2);
+}
+
+/* ==============================
+   CONTACT SECTION
+============================== */
+.contact-grid{
+  display:grid;grid-template-columns:1fr 1.3fr;
+  gap:4rem;margin-top:4rem;
+  align-items:start;
+}
+@media(max-width:900px){.contact-grid{grid-template-columns:1fr;}}
+.contact-info-list{display:flex;flex-direction:column;gap:1.2rem;}
+.c-item{
+  display:flex;align-items:center;gap:1.2rem;
+  padding:1.2rem;
+  background:var(--card);
+  border:1px solid var(--card-border);
+  border-radius:4px;
+  transition:var(--transition);text-decoration:none;
+}
+.c-item:hover{
+  border-color:var(--gold);
+  transform:translateX(8px);
+  box-shadow:0 10px 30px rgba(255,215,0,0.1);
+}
+.c-ico{
+  width:46px;height:46px;flex-shrink:0;
+  background:rgba(255,215,0,0.08);
+  border:1px solid rgba(255,215,0,0.2);
+  border-radius:3px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;
+}
+.c-text h5{
+  color:var(--gold);font-size:0.72rem;
+  letter-spacing:2px;text-transform:uppercase;margin-bottom:3px;
+}
+.c-text p,.c-text a{
+  color:var(--text2);font-size:0.9rem;
+  text-decoration:none;
+}
+.c-text a:hover{color:var(--gold);}
+.contact-form{
+  background:var(--card);
+  border:1px solid var(--card-border);
+  border-radius:4px;padding:2.5rem;
+}
+.contact-form h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.8rem;color:var(--gold);
+  margin-bottom:2rem;
+}
+.f-group{margin-bottom:1.5rem;}
+.f-group label{
+  display:block;margin-bottom:0.5rem;
+  font-size:0.72rem;letter-spacing:2px;
+  text-transform:uppercase;color:var(--text2);
+}
+.f-group input,.f-group textarea{
+  width:100%;padding:13px 16px;
+  background:var(--input-bg);
+  border:1px solid var(--card-border);
+  border-radius:2px;color:var(--text);
+  font-family:'Raleway',sans-serif;
+  font-size:0.9rem;transition:border-color 0.3s;
+}
+.f-group input:focus,.f-group textarea:focus{
+  outline:none;border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(255,215,0,0.06);
+}
+.f-group textarea{resize:vertical;min-height:130px;}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.submit-btn{
+  width:100%;padding:15px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#000;border:none;border-radius:2px;
+  font-family:'Raleway',sans-serif;
+  font-size:0.8rem;font-weight:800;
+  letter-spacing:3px;text-transform:uppercase;
+  cursor:pointer;transition:var(--transition);
+  clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);
+}
+.submit-btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 15px 40px rgba(255,215,0,0.4);
+}
+.submit-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
+.form-success{
+  display:none;text-align:center;padding:3rem 1rem;
+}
+.form-success .check{
+  font-size:4rem;
+  animation:popIn 0.5s ease both;
+  display:block;margin-bottom:1rem;
+}
+@keyframes popIn{0%{transform:scale(0) rotate(-20deg)}80%{transform:scale(1.2) rotate(5deg)}100%{transform:scale(1) rotate(0)}}
+.form-success h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2rem;color:var(--gold);margin-bottom:0.5rem;
+}
+.form-success p{color:var(--text2);margin-bottom:2rem;}
+
+/* ==============================
+   AI CHAT WIDGET
+============================== */
+.ai-fab{
+  position:fixed;bottom:28px;right:28px;
+  width:62px;height:62px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  border-radius:50%;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;z-index:998;
+  box-shadow:0 8px 30px rgba(255,215,0,0.4);
+  animation:fabPulse 3s infinite;
+  transition:transform 0.3s;
+}
+.ai-fab:hover{transform:scale(1.1);}
+@keyframes fabPulse{
+  0%,100%{box-shadow:0 8px 30px rgba(255,215,0,0.4);}
+  50%{box-shadow:0 8px 50px rgba(255,215,0,0.7),0 0 0 12px rgba(255,215,0,0.08);}
+}
+.ai-panel{
+  position:fixed;bottom:105px;right:28px;
+  width:370px;height:520px;
+  background:var(--bg2);
+  border:1px solid rgba(255,215,0,0.25);
+  border-radius:8px;
+  display:none;flex-direction:column;
+  box-shadow:0 25px 80px rgba(0,0,0,0.6);
+  z-index:997;overflow:hidden;
+}
+.ai-panel.open{display:flex;animation:panelSlide 0.35s cubic-bezier(0.34,1.56,0.64,1) both;}
+@keyframes panelSlide{
+  from{transform:translateY(30px) scale(0.95);opacity:0;}
+  to{transform:translateY(0) scale(1);opacity:1;}
+}
+.chat-header{
+  background:linear-gradient(135deg,#1a1008,#2a1800);
+  border-bottom:1px solid rgba(255,215,0,0.2);
+  padding:1rem 1.2rem;
+  display:flex;align-items:center;gap:1rem;
+}
+.chat-avatar-wrap{position:relative;}
+.chat-av{
+  width:40px;height:40px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;font-weight:700;color:#000;
+}
+.online-dot{
+  position:absolute;bottom:0;right:0;
+  width:10px;height:10px;
+  background:#4ade80;border-radius:50%;
+  border:2px solid var(--bg2);
+}
+.chat-hinfo{flex:1;}
+.chat-hinfo h4{color:var(--gold);font-size:0.9rem;font-weight:700;}
+.chat-hinfo p{color:rgba(255,255,255,0.4);font-size:0.72rem;}
+.chat-close{
+  background:none;border:none;color:var(--text2);
+  font-size:1.2rem;cursor:pointer;
+  padding:4px;transition:color 0.2s;
+}
+.chat-close:hover{color:var(--gold);}
+.chat-msgs{
+  flex:1;overflow-y:auto;
+  padding:1.2rem;
+  display:flex;flex-direction:column;gap:0.8rem;
+}
+.chat-msgs::-webkit-scrollbar{width:2px;}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--gold2);}
+.msg{
+  max-width:85%;
+  padding:10px 14px;
+  border-radius:12px;
+  font-size:0.85rem;line-height:1.6;
+  animation:msgPop 0.3s ease both;
+}
+@keyframes msgPop{
+  from{transform:scale(0.85) translateY(10px);opacity:0;}
+  to{transform:scale(1) translateY(0);opacity:1;}
+                  }
+  .msg.bot{
+  background:rgba(255,215,0,0.06);
+  border:1px solid rgba(255,215,0,0.15);
+  color:var(--text);
+  align-self:flex-start;
+  border-bottom-left-radius:3px;
+}
+.msg.user{
+  background:linear-gradient(135deg,var(--gold2),var(--gold));
+  color:#000;font-weight:600;
+  align-self:flex-end;
+  border-bottom-right-radius:3px;
+}
+.typing-ind{
+  display:flex;gap:5px;padding:12px 16px;
+  align-items:center;
+}
+.typing-ind span{
+  width:6px;height:6px;
+  background:var(--gold3);border-radius:50%;
+  animation:typDot 1.4s infinite;
+}
+.typing-ind span:nth-child(2){animation-delay:0.2s;}
+.typing-ind span:nth-child(3){animation-delay:0.4s;}
+@keyframes typDot{
+  0%,80%,100%{transform:scale(0.6);opacity:0.3;}
+  40%{transform:scale(1);opacity:1;}
+}
+.chat-footer{
+  padding:1rem;
+  border-top:1px solid rgba(255,215,0,0.1);
+  display:flex;gap:0.6rem;
+}
+.chat-inp{
+  flex:1;padding:10px 14px;
+  background:var(--input-bg);
+  border:1px solid rgba(255,215,0,0.15);
+  border-radius:20px;color:var(--text);
+  font-family:'Raleway',sans-serif;
+  font-size:0.85rem;
+}
+.chat-inp:focus{outline:none;border-color:var(--gold);}
+.chat-send{
+  width:40px;height:40px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  border:none;border-radius:50%;color:#000;
+  font-size:1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform 0.2s;flex-shrink:0;
+}
+.chat-send:hover{transform:scale(1.1);}
+
+/* ==============================
+   FOOTER
+============================== */
+footer{
+  background:var(--bg);
+  border-top:1px solid var(--card-border);
+  padding:2.5rem 5%;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;
+}
+.footer-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.5rem;font-weight:700;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  letter-spacing:4px;
+}
+.footer-text{color:var(--text2);font-size:0.8rem;text-align:center;}
+.footer-socials{display:flex;gap:0.8rem;}
+.f-social{
+  width:38px;height:38px;
+  background:rgba(255,215,0,0.06);
+  border:1px solid rgba(255,215,0,0.15);
+  border-radius:2px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;text-decoration:none;
+  transition:var(--transition);
+}
+.f-social:hover{background:var(--gold);transform:translateY(-3px);}
+
+/* ==============================
+   ANIMATIONS
+============================== */
+@keyframes fadeSlideUp{
+  from{opacity:0;transform:translateY(40px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.fade1{animation:fadeSlideUp 0.9s ease 0.1s both;}
+.fade2{animation:fadeSlideUp 0.9s ease 0.3s both;}
+.fade3{animation:fadeSlideUp 0.9s ease 0.5s both;}
+.fade4{animation:fadeSlideUp 0.9s ease 0.7s both;}
+.fade5{animation:fadeSlideUp 0.9s ease 0.9s both;}
+
+/* Gold shimmer line */
+.shimmer-line{
+  width:100%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  animation:shimmer 3s infinite;
+}
+@keyframes shimmer{
+  0%{background-position:-200% 0;}
+  100%{background-position:200% 0;}
+  background-size:200% 1px;
+}
+</style>
+</head>
+<body>
+
+<!-- ==============================
+     NAVIGATION
+============================== -->
+<nav id="navbar">
+  <a class="logo" href="#home">✦ SWEETU</a>
+  <ul class="nav-links" id="navlinks">
+    <li><a href="#home" onclick="goTo('home')">Home</a></li>
+    <li><a href="#about" onclick="goTo('about')">About</a></li>
+    <li><a href="#portfolio" onclick="goTo('portfolio')">My Work</a></li>
+    <li><a href="#contact" onclick="goTo('contact')">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle Theme">🌙</button>
+    <div class="hamburger" id="ham" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- ==============================
+     HOME SECTION
+============================== -->
+<section id="home">
+  <canvas id="three-canvas"></canvas>
+
+  <div class="hero-left">
+    <div class="hero-eyebrow fade1">Professional Freelancer</div>
+    <h1 class="hero-name fade2">SWEETU</h1>
+    <div class="typing-wrap fade3">
+      <span id="typed"></span><span class="cursor"></span>
+    </div>
+    <p class="hero-desc fade4">
+      Premium digital solutions crafted with passion. From stunning web design to 
+      powerful development — based in Sheikhupura, Pakistan, serving clients worldwide.
+    </p>
+    <div class="hero-btns fade5">
+      <a class="btn-primary" href="#portfolio" onclick="goTo('portfolio');return false;">View My Work</a>
+      <a class="btn-secondary" href="#contact" onclick="goTo('contact');return false;">Hire Me</a>
+    </div>
+    <div class="hero-stats fade5">
+      <div class="stat">
+        <div class="stat-n" id="cnt1">0+</div>
+        <div class="stat-l">Projects Done</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n" id="cnt2">0+</div>
+        <div class="stat-l">Happy Clients</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n" id="cnt3">0+</div>
+        <div class="stat-l">Years Exp.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right fade3">
+    <div class="photo-wrapper">
+      <div class="photo-ring-2"></div>
+      <div class="photo-ring-1"></div>
+  <div class="photo-glow"></div>
+      <div class="photo-border"></div>
+      <div class="photo-img">
+        <img 
+          id="profileImg"
+          src="https://raw.githubusercontent.com/Sweetu-Site-/net/main/IMG-20260420-WA0002.jpg"
+          alt="Sweetu"
+          onerror="handleImgError()"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-down" onclick="goTo('about')">Scroll</div>
+</section>
+
+<!-- ==============================
+     ABOUT SECTION
+============================== -->
+<section id="about" class="section section-alt">
+  <div class="s-label reveal">About Me</div>
+  <h2 class="s-title reveal">Who I Am</h2>
+  <div class="s-line reveal"></div>
+
+  <div class="about-grid">
+    <div class="reveal">
+      <p>
+        Hello! I'm <strong style="color:var(--gold)">Sweetu</strong>, a dedicated and passionate freelancer 
+        based in Main Bazar, Sheikhupura, Punjab, Pakistan. I specialize in creating stunning 
+        digital experiences that blend creativity with cutting-edge technology.
+      </p>
+      <p>
+        With years of hands-on experience, I've helped businesses and individuals across the 
+        globe achieve their digital goals. My commitment to quality and client satisfaction 
+        is at the heart of everything I create.
+      </p>
+      <p>
+        Whether you need a powerful website, a beautiful brand identity, or a comprehensive 
+        digital marketing strategy — I deliver excellence, on time, every time.
+      </p>
+      <div class="about-detail">
+        <div class="detail-item">
+          <div class="detail-icon">🚀</div>
+          <div class="detail-val counter" data-target="50">0</div>
+          <div class="detail-key">Projects</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon">⭐</div>
+          <div class="detail-val counter" data-target="40">0</div>
+          <div class="detail-key">Clients</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon">📅</div>
+          <div class="detail-val counter" data-target="3">0</div>
+          <div class="detail-key">Years Exp</div>
+        </div>
+      </div>
+      <div style="margin-top:2rem;">
+        <a class="btn-primary" href="#contact" onclick="goTo('contact');return false;">Let's Work Together</a>
+      </div>
+    </div>
+
+    <div class="skill-group reveal">
+      <div class="skill-item">
+        <div class="skill-head">
+          <span class="skill-nm">Web Design & UI/UX</span>
+          <span class="skill-pc">95%</span>
+        </div>
+        <div class="skill-bar"><div class="skill-fill" data-w="95"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-head">
+          <span class="skill-nm">Web Development</span>
+          <span class="skill-pc">90%</span>
+        </div>
+        <div class="skill-bar"><div class="skill-fill" data-w="90"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-head">
+          <span class="skill-nm">Graphic Design</span>
+          <span class="skill-pc">88%</span>
+        </div>
+        <div class="skill-bar"><div class="skill-fill" data-w="88"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-head">
+          <span class="skill-nm">Digital Marketing</span>
+          <span class="skill-pc">85%</span>
+        </div>
+        <div class="skill-bar"><div class="skill-fill" data-w="85"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-head">
+          <span class="skill-nm">Video Editing</span>
+          <span class="skill-pc">82%</span>
+        </div>
+        <div class="skill-bar"><div class="skill-fill" data-w="82"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-head">
+          <span class="skill-nm">Brand Identity</span>
+          <span class="skill-pc">92%</span>
+        </div>
+        <div class="skill-bar"><div class="skill-fill" data-w="92"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="services-row">
+    <div class="svc-card reveal">
+      <span class="svc-icon">🎨</span>
+      <h4>UI/UX Design</h4>
+      <p>Beautiful, intuitive interfaces that delight users and drive real conversions for your business.</p>
+    </div>
+    <div class="svc-card reveal">
+      <span class="svc-icon">💻</span>
+      <h4>Web Development</h4>
+      <p>Fast, responsive websites and web apps built with modern, cutting-edge technologies.</p>
+    </div>
+    <div class="svc-card reveal">
+      <span class="svc-icon">📱</span>
+      <h4>App Development</h4>
+      <p>Cross-platform mobile applications that work flawlessly on all devices and platforms.</p>
+    </div>
+    <div class="svc-card reveal">
+      <span class="svc-icon">📊</span>
+      <h4>Digital Marketing</h4>
+      <p>Strategic campaigns combining SEO, social media, and PPC to grow your brand and reach.</p>
+    </div>
+    <div class="svc-card reveal">
+      <span class="svc-icon">🎬</span>
+      <h4>Video Editing</h4>
+      <p>Professional video production and editing for brands, ads, and social media content.</p>
+    </div>
+    <div class="svc-card reveal">
+      <span class="svc-icon">✨</span>
+      <h4>Brand Identity</h4>
+      <p>Complete branding packages — logos, color systems, and visual identities that stand out.</p>
+    </div>
+    </div>
+</section>
+
+<!-- ==============================
+     PORTFOLIO SECTION
+============================== -->
+<section id="portfolio" class="section">
+  <div class="s-label reveal">Portfolio</div>
+  <h2 class="s-title reveal">My Work</h2>
+  <div class="s-line reveal"></div>
+
+  <div class="port-filter reveal">
+    <button class="filter-btn active" onclick="filterPorts(this,'all')">All</button>
+    <button class="filter-btn" onclick="filterPorts(this,'design')">Design</button>
+    <button class="filter-btn" onclick="filterPorts(this,'dev')">Development</button>
+    <button class="filter-btn" onclick="filterPorts(this,'marketing')">Marketing</button>
+  </div>
+
+  <div class="port-grid">
+    <div class="port-card reveal" data-cat="dev">
+      <div class="port-thumb" style="background:linear-gradient(135deg,#1a1005,#2d1c00)">
+        <span class="icon">🛒</span>
+        <div class="port-overlay"><span style="color:var(--gold);font-size:0.8rem;letter-spacing:2px;">VIEW PROJECT →</span></div>
+      </div>
+      <div class="port-body">
+        <h4>Premium E-Commerce Store</h4>
+        <p>Full-stack online store with payment gateway, inventory system & stunning responsive design.</p>
+        <div class="port-tags">
+          <span class="p-tag">Web Dev</span>
+          <span class="p-tag">E-Commerce</span>
+          <span class="p-tag">UI/UX</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="port-card reveal" data-cat="design">
+      <div class="port-thumb" style="background:linear-gradient(135deg,#0a1205,#001a08)">
+        <span class="icon">📱</span>
+        <div class="port-overlay"><span style="color:var(--gold);font-size:0.8rem;letter-spacing:2px;">VIEW PROJECT →</span></div>
+      </div>
+      <div class="port-body">
+        <h4>Mobile App UI/UX</h4>
+        <p>Modern fintech app interface with smooth micro-animations and user-centric design approach.</p>
+        <div class="port-tags">
+          <span class="p-tag">UI/UX</span>
+          <span class="p-tag">Figma</span>
+          <span class="p-tag">Mobile</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="port-card reveal" data-cat="design">
+      <div class="port-thumb" style="background:linear-gradient(135deg,#120a1a,#200030)">
+        <span class="icon">🏆</span>
+        <div class="port-overlay"><span style="color:var(--gold);font-size:0.8rem;letter-spacing:2px;">VIEW PROJECT →</span></div>
+      </div>
+      <div class="port-body">
+        <h4>Luxury Brand Identity</h4>
+        <p>Complete brand system including logo design, color palette, typography, and brand guidelines.</p>
+        <div class="port-tags">
+          <span class="p-tag">Branding</span>
+          <span class="p-tag">Logo</span>
+          <span class="p-tag">Design</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="port-card reveal" data-cat="dev">
+      <div class="port-thumb" style="background:linear-gradient(135deg,#050d1a,#001028)">
+        <span class="icon">📊</span>
+        <div class="port-overlay"><span style="color:var(--gold);font-size:0.8rem;letter-spacing:2px;">VIEW PROJECT →</span></div>
+      </div>
+      <div class="port-body">
+        <h4>Business Analytics Dashboard</h4>
+        <p>Real-time data visualization dashboard with interactive charts and comprehensive reporting.</p>
+        <div class="port-tags">
+          <span class="p-tag">Dashboard</span>
+          <span class="p-tag">Analytics</span>
+          <span class="p-tag">React</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="port-card reveal" data-cat="marketing">
+      <div class="port-thumb" style="background:linear-gradient(135deg,#1a0800,#2a1000)">
+        <span class="icon">🎬</span>
+        <div class="port-overlay"><span style="color:var(--gold);font-size:0.8rem;letter-spacing:2px;">VIEW PROJECT →</span></div>
+      </div>
+      <div class="port-body">
+        <h4>Viral Social Media Campaign</h4>
+        <p>End-to-end social media strategy with video production, reaching 2M+ impressions.</p>
+        <div class="port-tags">
+          <span class="p-tag">Marketing</span>
+          <span class="p-tag">Video</span>
+          <span class="p-tag">Social Media</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="port-card reveal" data-cat="marketing">
+      <div class="port-thumb" style="background:linear-gradient(135deg,#001a14,#002818)">
+        <span class="icon">🚀</span>
+        <div class="port-overlay"><span style="color:var(--gold);font-size:0.8rem;letter-spacing:2px;">VIEW PROJECT →</span></div>
+      </div>
+      <div class="port-body">
+        <h4>SEO & Growth Strategy</h4>
+        <p>Comprehensive SEO overhaul that tripled organic traffic in 3 months with targeted content strategy.</p>
+        <div class="port-tags">
+          <span class="p-tag">SEO</span>
+          <span class="p-tag">Content</span>
+          <span class="p-tag">Growth</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==============================
+     CONTACT SECTION
+============================== -->
+<section id="contact" class="section section-alt">
+  <div class="s-label reveal">Get In Touch</div>
+  <h2 class="s-title reveal">Contact Me</h2>
+  <div class="s-line reveal"></div>
+
+  <div class="contact-grid">
+    <div class="reveal">
+      <p style="color:var(--text2);line-height:1.9;margin-bottom:2rem;">
+        Ready to bring your vision to life? I'm here to help. 
+        Reach out via any channel and I'll get back to you promptly.
+      </p>
+      <div class="contact-info-list">
+        <a class="c-item" href="mailto:contact@sweetu.online">
+          <div class="c-ico">📧</div>
+          <div class="c-text">
+            <h5>Email</h5>
+            <p>contact@sweetu.online</p>
+          </div>
+        </a>
+        <a class="c-item" href="tel:+923016305418">
+          <div class="c-ico">📱</div>
+          <div class="c-text">
+            <h5>Phone</h5>
+            <p>+92 301 630 5418</p>
+          </div>
+        </a>
+        <a class="c-item" href="https://wa.me/923016305418" target="_blank">
+          <div class="c-ico">💬</div>
+          <div class="c-text">
+            <h5>WhatsApp</h5>
+            <a href="https://wa.me/923016305418">Chat on WhatsApp →</a>
+          </div>
+        </a>
+        <div class="c-item">
+          <div class="c-ico">📍</div>
+          <div class="c-text">
+            <h5>Location</h5>
+            <p>Main Bazar, Sheikhupura<br>Punjab, Pakistan</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form reveal" id="formBox">
+      <h3>Send a Message</h3>
+      <div id="formArea">
+        <div class="f-row">
+          <div class="f-group">
+            <label>Your Name</label>
+            <input type="text" id="fn" placeholder="Your full name"/>
+          </div>
+          <div class="f-group">
+            <label>Email Address</label>
+            <input type="email" id="fe" placeholder="your@email.com"/>
+          </div>
+        </div>
+        <div class="f-group">
+          <label>Phone (optional)</label>
+          <input type="tel" id="fp" placeholder="Your phone number"/>
+        </div>
+        <div class="f-group">
+          <label>Subject</label>
+          <input type="text" id="fs" placeholder="What can I help you with?"/>
+        </div>
+        <div class="f-group">
+          <label>Message</label>
+          <textarea id="fm" placeholder="Tell me about your project in detail..."></textarea>
+        </div>
+        <button class="submit-btn" id="submitBtn" onclick="submitForm()">Send Message ✈️</button>
+      </div>
+      <div class="form-success" id="formSuccess">
+        <span class="check">✅</span>
+        <h3>Message Sent!</h3>
+        <p>Thank you! Sweetu will respond to you very soon.</p>
+        <button class="btn-primary" onclick="resetForm()">Send Another Message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">✦ SWEETU</div>
+  <div class="footer-text">
+    © 2026 Sweetu | contact@sweetu.online | Sheikhupura, Pakistan
+  </div>
+  <div class="footer-socials">
+    <a class="f-social" href="https://wa.me/923016305418" title="WhatsApp">💬</a>
+    <a class="f-social" href="mailto:contact@sweetu.online" title="Email">✉️</a>
+    <a class="f-social" href="tel:+923016305418" title="Call">📱</a>
+  </div>
+</footer>
+
+<!-- AI Chat FAB -->
+<button class="ai-fab" id="aiFab" onclick="toggleChat()" title="Chat with AI Assistant">🤖</button>
+
+<!-- AI Chat Panel -->
+<div class="ai-panel" id="aiPanel">
+  <div class="chat-header">
+    <div class="chat-avatar-wrap">
+      <div class="chat-av">S</div>
+      <div class="online-dot"></div>
+    </div>
+    <div class="chat-hinfo">
+      <h4>Sweetu's AI Assistant</h4>
+      <p>Online — Ask me anything!</p>
+    </div>
+    <button class="chat-close" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chat-msgs" id="chatMsgs">
+    <div class="msg bot">
+      👋 Hello! I'm Sweetu's AI assistant. I can tell you about his services, expertise, pricing, and availability. How can I help you today?
+    </div>
+  </div>
+  <div class="chat-footer">
+    <input class="chat-inp" id="chatInp" placeholder="Type your message..." 
+           onkeypress="if(event.key==='Enter')sendMsg()"/>
+    <button class="chat-send" onclick="sendMsg()">➤</button>
+  </div>
+</div>
+
+<!-- THREE.JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+// ============================================
+// THEME TOGGLE
+// ============================================
+let dark = true;
+function toggleTheme(){
+  dark = !dark;
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  document.getElementById('themeBtn').textContent = dark ? '🌙' : '☀️';
+}
+
+// ============================================
+// SMOOTH SCROLL
+// ============================================
+function goTo(id){
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+  // close mobile menu
+  const nl = document.getElementById('navlinks');
+  nl.classList.remove('mobile-open');
+}
+
+// ============================================
+// MOBILE MENU
+// ============================================
+function toggleMenu(){
+  const nl = document.getElementById('navlinks');
+  nl.classList.toggle('mobile-open');
+}
+
+// ============================================
+// IMAGE FALLBACK
+// ============================================
+function handleImgError(){
+  const img = document.getElementById('profileImg');
+  img.style.display = 'none';
+  const wrap = img.parentElement;
+  wrap.innerHTML = `<div class="photo-fallback">
+    <span>👤</span>
+    <p>SWEETU</p>
+  </div>`;
+}
+
+  // Try alternate URL too
+const img = document.getElementById('profileImg');
+if(img){
+  img.addEventListener('error', function(){
+    // Try second URL
+    if(!this.dataset.tried){
+      this.dataset.tried = '1';
+      this.src = 'https://raw.githubusercontent.com/Sweetu-Site-.net/main/IMG-20260420-WA0002.jpg';
+    } else {
+      handleImgError();
+    }
+  });
+}
+
+// ============================================
+// THREE.JS 3D GOLDEN PARTICLE FIELD
+// ============================================
+(function(){
+  const canvas = document.getElementById('three-canvas');
+  const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 1000);
+  camera.position.z = 60;
+
+  // Golden star particles
+  const N = 2500;
+  const pos = new Float32Array(N*3);
+  const col = new Float32Array(N*3);
+  for(let i=0;i<N;i++){
+    pos[i*3] = (Math.random()-.5)*250;
+    pos[i*3+1] = (Math.random()-.5)*250;
+    pos[i*3+2] = (Math.random()-.5)*150;
+    const t = Math.random();
+    col[i*3] = 0.85 + t*0.15;
+    col[i*3+1] = 0.65 + t*0.25;
+    col[i*3+2] = t*0.1;
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(pos,3));
+  geo.setAttribute('color', new THREE.BufferAttribute(col,3));
+  const mat = new THREE.PointsMaterial({size:0.7, vertexColors:true, transparent:true, opacity:0.75});
+  const stars = new THREE.Points(geo, mat);
+  scene.add(stars);
+
+  // 3D Torus knot (gold wireframe)
+  const tkGeo = new THREE.TorusKnotGeometry(18, 5, 120, 16);
+  const tkMat = new THREE.MeshBasicMaterial({color:0xFFD700, wireframe:true, transparent:true, opacity:0.04});
+  const tk = new THREE.Mesh(tkGeo, tkMat);
+  tk.position.set(90, -10, -20);
+  scene.add(tk);
+
+  // Icosahedron
+  const icoGeo = new THREE.IcosahedronGeometry(12, 1);
+  const icoMat = new THREE.MeshBasicMaterial({color:0xDAA520, wireframe:true, transparent:true, opacity:0.06});
+  const ico = new THREE.Mesh(icoGeo, icoMat);
+  ico.position.set(-80, 20, -30);
+  scene.add(ico);
+
+  // Mouse parallax
+  let mx=0, my=0;
+  document.addEventListener('mousemove', e=>{
+    mx = (e.clientX/window.innerWidth - 0.5) * 2;
+    my = (e.clientY/window.innerHeight - 0.5) * 2;
+  });
+
+  let frame = 0;
+  function animate(){
+    requestAnimationFrame(animate);
+    frame++;
+    stars.rotation.y += 0.0004;
+    stars.rotation.x += 0.0002;
+    stars.rotation.y += mx * 0.0006;
+    stars.rotation.x += my * 0.0003;
+    tk.rotation.x += 0.004;
+    tk.rotation.y += 0.006;
+    ico.rotation.x -= 0.003;
+    ico.rotation.z += 0.004;
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', ()=>{
+    camera.aspect = window.innerWidth/window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+})();
+
+// ============================================
+// TYPING ANIMATION
+// ============================================
+const roles = ['Web Designer', 'UI/UX Expert', 'Developer', 'Digital Marketer', 'Brand Creator', 'Freelancer'];
+let ri=0, ci=0, del=false;
+const tEl = document.getElementById('typed');
+
+function typeLoop(){
+  const w = roles[ri];
+  if(!del){
+    tEl.textContent = w.slice(0, ++ci);
+    if(ci===w.length){ del=true; setTimeout(typeLoop,2200); return; }
+    setTimeout(typeLoop, 90);
+  } else {
+    tEl.textContent = w.slice(0, --ci);
+    if(ci===0){ del=false; ri=(ri+1)%roles.length; }
+    setTimeout(typeLoop, 55);
+  }
+}
+typeLoop();
+
+// ============================================
+// COUNTER ANIMATION
+// ============================================
+function countUp(el, target, suffix=''){
+  let c=0, step=target/70;
+  const t = setInterval(()=>{
+    c = Math.min(c+step, target);
+    el.textContent = Math.floor(c) + '+';
+    if(c>=target) clearInterval(t);
+  }, 25);
+}
+setTimeout(()=>{
+  countUp(document.getElementById('cnt1'), 50);
+  countUp(document.getElementById('cnt2'), 40);
+  countUp(document.getElementById('cnt3'), 3);
+}, 1200);
+
+// ============================================
+// SCROLL REVEAL & SKILL BARS
+// ============================================
+const revealObs = new IntersectionObserver((entries)=>{
+  entries.forEach((e, i)=>{
+    if(e.isIntersecting){
+      setTimeout(()=>{
+        e.target.classList.add('visible');
+        // Skills
+        e.target.querySelectorAll('.skill-fill').forEach(f=>{
+          f.style.width = f.dataset.w + '%';
+        });
+        // Counters on detail items
+        e.target.querySelectorAll('.counter').forEach(c=>{
+          const t = parseInt(c.dataset.target);
+          let n=0, s=t/60;
+          const ti = setInterval(()=>{
+            n=Math.min(n+s,t);
+            c.textContent = Math.floor(n)+'+';
+            if(n>=t) clearInterval(ti);
+          }, 25);
+        });
+      }, i * 80);
+    }
+  });
+}, {threshold:0.12});
+
+document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+
+// ============================================
+// 3D TILT ON CARDS
+// ============================================
+document.querySelectorAll('.port-card, .svc-card, .detail-item').forEach(card=>{
+  card.addEventListener('mousemove', e=>{
+    const r = card.getBoundingClientRect();
+    const x = ((e.clientX-r.left)/r.width-0.5)*24;
+    const y = ((e.clientY-r.top)/r.height-0.5)*-24;
+    card.style.transform = `perspective(900px) rotateX(${y}deg) rotateY(${x}deg) translateZ(15px) translateY(-8px)`;
+  });
+  card.addEventListener('mouseleave', ()=>{ card.style.transform=''; });
+});
+
+// ============================================
+// PORTFOLIO FILTER
+// ============================================
+function filterPorts(btn, cat){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.port-card').forEach(c=>{
+    if(cat==='all' || c.dataset.cat===cat){
+      c.style.display='';
+      setTimeout(()=>c.style.opacity='1', 10);
+    } else {
+      c.style.opacity='0';
+      setTimeout(()=>c.style.display='none', 300);
+    }
+  });
+}
+
+// ============================================
+// CONTACT FORM
+// ============================================
+async function submitForm(){
+  const name = document.getElementById('fn').value.trim();
+  const email = document.getElementById('fe').value.trim();
+  const phone = document.getElementById('fp').value.trim();
+  const subj = document.getElementById('fs').value.trim();
+  const msg = document.getElementById('fm').value.trim();
+
+  if(!name || !email || !subj || !msg){
+    // Highlight empty fields
+    [['fn',name],['fe',email],['fs',subj],['fm',msg]].forEach(([id,val])=>{
+      const el = document.getElementById(id);
+      if(!val){ el.style.borderColor='#ff4444'; setTimeout(()=>el.style.borderColor='',2000); }
+    });
+    return;
+  }
+
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = 'Sending... ⏳';
+  btn.disabled = true;
+
+  // Build mailto link - primary working method
+  const mailBody = `Hi Sweetu,\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone||'Not provided'}\n\nMessage:\n${msg}\n\n---\nSent from Sweetu's website contact form`;
+  const mailHref = `mailto:contact@sweetu.online?subject=${encodeURIComponent('[Sweetu.online] '+subj+' — from '+name)}&body=${encodeURIComponent(mailBody)}`;
+  window.location.href = mailHref;
+
+  // Show success after brief delay
+  setTimeout(()=>{
+    document.getElementById('formArea').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  }, 900);
+}
+
+function resetForm(){
+  ['fn','fe','fp','fs','fm'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('formArea').style.display = 'block';
+  document.getElementById('formSuccess').style.display = 'none';
+  document.getElementById('submitBtn').textContent = 'Send Message ✈️';
+  document.getElementById('submitBtn').disabled = false;
+}
+
+// ============================================
+// AI CHAT
+// ============================================
+let chatOpen = false;
+let history = [];
+
+function toggleChat(){
+  chatOpen = !chatOpen;
+  document.getElementById('aiPanel').classList.toggle('open', chatOpen);
+  if(chatOpen) document.getElementById('chatInp').focus();
+}
+
+async function sendMsg(){
+  const inp = document.getElementById('chatInp');
+  const text = inp.value.trim();
+  if(!text) return;
+  inp.value = '';
+
+  addMsg(text, 'user');
+  history.push({role:'user', content:text});
+
+  // typing indicator
+  const typDiv = document.createElement('div');
+  typDiv.className = 'msg bot';
+  typDiv.id = 'typInd';
+  typDiv.innerHTML = '<div class="typing-ind"><span></span><span></span><span></span></div>';
+  document.getElementById('chatMsgs').appendChild(typDiv);
+  scrollChat();
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: `You are the AI assistant for SWEETU, a professional freelancer. Your job is to help potential clients understand Sweetu's services and encourage them to make contact.
+
+ABOUT SWEETU:
+- Name: Sweetu
+- Website: sweetu.online
+- Email: contact@sweetu.online
+- Phone/WhatsApp: +92 301 630 5418
+- Location: Main Bazar, Sheikhupura, Punjab, Pakistan
+- Experience: 3+ years, 50+ projects completed, 40+ happy clients
+
+SERVICES OFFERED:
+1. Web Design & UI/UX Design — Beautiful, modern, responsive websites
+2. Web Development — Full-stack websites and web applications
+3. Mobile App Development — Cross-platform mobile apps
+4. Digital Marketing — SEO, social media, PPC, content marketing
+5. Graphic Design — Logos, branding, print materials
+6. Video Editing — Professional video production and editing
+7. Brand Identity — Complete brand packages
+
+HOW TO RESPOND:
+- Be warm, professional, and helpful
+- Understand the client's needs before recommending a service
+- Mention relevant services based on what the client asks
+- Always end by encouraging them to contact Sweetu directly
+- If asked about pricing, say it depends on project scope and to contact for a free quote
+- If client writes in Urdu, respond in Urdu. If in English, respond in English
+- Keep responses concise (2-4 sentences ideally)
+- Be enthusiastic about helping`,
+        messages: history
+      })
+    });
+
+    const data = await resp.json();
+    const reply = data.content?.[0]?.text || "Apologies! Please contact Sweetu directly at contact@sweetu.online or WhatsApp +92 301 630 5418";
+
+    document.getElementById('typInd')?.remove();
+    history.push({role:'assistant', content:reply});
+    addMsg(reply, 'bot');
+
+  } catch(err){
+    document.getElementById('typInd')?.remove();
+    addMsg("I'm having trouble connecting right now. Please contact Sweetu directly: 📧 contact@sweetu.online | 💬 +92 301 630 5418 on WhatsApp", 'bot');
+  }
+}
+
+function addMsg(text, type){
+  const div = document.createElement('div');
+  div.className = `msg ${type}`;
+  div.textContent = text;
+  document.getElementById('chatMsgs').appendChild(div);
+  scrollChat();
+}
+
+function scrollChat(){
+  const m = document.getElementById('chatMsgs');
+  m.scrollTop = m.scrollHeight;
+}
+</script>
+</body>
+</html>
